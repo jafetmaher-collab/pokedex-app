@@ -1,7 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular';
+
+import { Component, inject, signal } from '@angular/core';
+import {
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonImg,
+  IonText,
+  IonBadge,
+  IonInfiniteScroll,
+  IonInfiniteScrollContent,
+  InfiniteScrollCustomEvent,
+  LoadingController
+} from '@ionic/angular';
+
+import { Router } from '@angular/router';
+import { Pokemon } from '../../services/pokemon';
+import { Ipokemon } from '../../models/pokemon.model';
 
 @Component({
   selector: 'app-list-pokemon',
@@ -10,14 +28,74 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular';
   imports: [
     IonContent,
     IonHeader,
-    IonTitle,
     IonToolbar,
-    CommonModule,
-    FormsModule,
-  ],
+    IonTitle,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonImg,
+    IonText,
+    IonBadge,
+    IonInfiniteScroll,
+    IonInfiniteScrollContent
+  ]
 })
-export class ListPokemonPage implements OnInit {
-  constructor() {}
+export class ListPokemonPage {
 
-  ngOnInit() {}
+  private pokemonService = inject(Pokemon);
+  private loadingController = inject(LoadingController);
+  private router = inject(Router);
+
+  pokemons = signal<Ipokemon[]>([]);
+  error = signal('');
+
+  ionViewWillEnter() {
+    if (this.pokemons().length === 0) {
+      this.morePokemon();
+    }
+  }
+
+  async morePokemon(event?: InfiniteScrollCustomEvent) {
+
+    const promisePokemons = this.pokemonService.getPokemons();
+
+    if (!promisePokemons) {
+      if (event) {
+        event.target.disabled = true;
+        await event.target.complete();
+      }
+      return;
+    }
+
+    let loading;
+
+    try {
+      if (!event) {
+        loading = await this.loadingController.create({
+          message: 'Cargando Pokémon...'
+        });
+
+        await loading.present();
+      }
+
+      const nuevos = await promisePokemons;
+
+      this.pokemons.update(actuales =>
+        actuales.concat(nuevos)
+      );
+
+    } catch (error) {
+      console.error('Error al obtener Pokémon:', error);
+      this.error.set('No se pudieron cargar los Pokémon');
+
+    } finally {
+      await loading?.dismiss();
+      await event?.target.complete();
+    }
+  }
+
+  goToDetail(pokemon: Ipokemon) {
+    this.router.navigate(['/detail-pokemon', pokemon.id]);
+  }
 }
+

@@ -1,0 +1,159 @@
+
+ion-content {
+  --background: #0b0e17;
+}
+
+ion-grid {
+  padding: 12px;
+}
+
+.pokemon-fila {
+  background: #151a28;
+  border: 1px solid #303747;
+  border-radius: 18px;
+  margin-bottom: 12px;
+  padding: 10px 8px;
+  min-height: 76px;
+  flex-wrap: nowrap;
+  cursor: pointer;
+  box-shadow: 0 4px 12px #00000030;
+}
+
+.pokemon-fila:active {
+  transform: scale(0.98);
+  background: #1c2233;
+}
+
+.sprite-col {
+  width: 55px;
+  flex: 0 0 55px;
+}
+
+.sprite-col ion-img {
+  width: 46px;
+  height: 46px;
+  padding: 4px;
+  border-radius: 12px;
+  background: #1c2233;
+}
+
+ion-img::part(image) {
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.nombre-col {
+  min-width: 0;
+  padding-left: 8px;
+}
+
+.nombre-col ion-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.tipos-col {
+  flex: 0 0 auto;
+}
+
+.tipos {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.tipo-img {
+  width: 65px;
+  height: 25px;
+  flex-shrink: 0;
+}
+
+.tipo-img::part(image) {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.tipo {
+  padding: 4px 6px;
+  border-radius: 12px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  --background: #64748b;
+  --color: #ffffff;
+}
+
+.tipo-grass {
+  --background: #16a34a;
+}
+
+.tipo-poison {
+  --background: #a855b7;
+}
+
+.tipo-fire {
+  --background: #f97316;
+}
+
+.tipo-flying {
+  --background: #60a5fa;
+}
+
+.tipo-water {
+  --background: #06b6d4;
+}
+
+.tipo-electric {
+  --background: #eab308;
+}
+
+.tipo-bug {
+  --background: #65a30d;
+}
+
+.tipo-normal {
+  --background: #78716c;
+}
+
+.tipo-ground {
+  --background: #b45309;
+}
+
+.tipo-psychic {
+  --background: #ec4899;
+}
+
+.tipo-fighting {
+  --background: #dc2626;
+}
+
+.tipo-rock {
+  --background: #a16207;
+}
+
+.tipo-ghost {
+  --background: #7c3aed;
+}
+
+.tipo-ice {
+  --background: #38bdf8;
+}
+
+.tipo-dragon {
+  --background: #6366f1;
+}
+
+.tipo-dark {
+  --background: #475569;
+}
+
+.tipo-steel {
+  --background: #64748b;
+}
+
+.tipo-fairy {
+  --background: #f472b6;
+}
